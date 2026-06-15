@@ -9,47 +9,45 @@ export default function TheGate() {
   const [cart, setCart] = useState<{ [key: number]: number }>({});
   const WHATSAPP_NUMBER = '966502777884';
 
-  // ... (نفس إعدادات النصوص والمنتجات السابقة)
   const ArabicText = {
-    gateTitle: 'بوابة التوزيع المغلقة',
-    gateDesc: 'منصة مخصصة حصرياً لأصحاب البوتيكات والمتاجر المسجلة.',
+    gateTitle: 'Studio Exclusive | بوابة النخبة',
+    gateDesc: 'منصة مخصصة حصرياً لأصحاب المتاجر المسجلة.',
     label: 'رقم السجل التجاري أو كود الدعوة',
     placeholder: 'أدخل الرمز هنا...',
-    btnNormal: 'طلب دخول المنصة',
+    btnNormal: 'دخول المنصة',
     btnLoading: 'جاري التحقق...',
     errorMsg: 'رمز الدخول غير صحيح.',
     btnLogout: 'تسجيل الخروج',
     currency: 'ر.س',
-    moq: 'أقل كمية:',
-    pieces: 'قطع',
-    inStock: 'متوفر',
-    outStock: 'نفدت الكمية',
     addToCart: 'إضافة للطلب',
-    inCart: 'مضاف بالسلة',
-    cartTitle: 'حقيبة الطلب',
-    sendWhatsapp: 'تأكيد الطلب عبر الواتساب',
   };
 
+  // هنا توجد الأصناف (المنتجات)
   const products = [
-    { id: 1, name: 'تيشرت اوفر سايز - خامات قطنية فاخرة', price: 35, moq: 5, stock: true, img: '👕' },
-    // ... أضف باقي المنتجات بنفس التنسيق
+    { id: 1, name: 'تيشرت بوكس سادة', price: 35, moq: 5, img: '👕' },
+    { id: 2, name: 'تيشرت اوفر سايز فاخر', price: 45, moq: 5, img: '👕' }
+    { id: 3, name: 'اسم المنتج الجديد', price: 50, moq: 5, img: '👕' },
   ];
 
-  // ... (باقي الدوال البرمجية تبقى كما هي)
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setTimeout(() => {
+        setIsLoggedIn(true);
+        setIsLoading(false);
+    }, 1000);
+  };
 
   if (isLoggedIn) {
     return (
-      <div className="min-h-screen bg-[#050505] text-white p-8 sm:p-16 text-right" dir="rtl">
-        <header className="border-b border-[#161616] pb-10 mb-12">
-          <h1 className="text-3xl font-bold text-[#c5a880]">{ArabicText.dashTitle}</h1>
-        </header>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+      <div className="min-h-screen bg-[#050505] text-white p-8" dir="rtl">
+        <h1 className="text-3xl font-bold text-[#c5a880] mb-10">{ArabicText.gateTitle}</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {products.map((product) => (
-            <div key={product.id} className="bg-[#0a0a0a] border border-[#161616] p-10 space-y-6">
-              <h3 className="text-xl font-bold text-gray-100">{product.name}</h3>
-              <div className="text-2xl font-bold text-[#c5a880]">{product.price} {ArabicText.currency}</div>
-              <button onClick={() => addToCart(product.id, product.moq)} className="w-full bg-[#111111] border border-[#1e1e1e] py-6 text-lg hover:bg-[#c5a880] hover:text-black">
+            <div key={product.id} className="bg-[#0a0a0a] border border-[#161616] p-8">
+              <h3 className="text-xl font-bold mb-4">{product.name}</h3>
+              <p className="text-2xl text-[#c5a880] mb-6">{product.price} {ArabicText.currency}</p>
+              <button className="w-full bg-[#111111] border border-[#c5a880] py-4 hover:bg-[#c5a880] hover:text-black">
                 {ArabicText.addToCart}
               </button>
             </div>
@@ -60,12 +58,12 @@ export default function TheGate() {
   }
 
   return (
-    <div className="min-h-screen bg-[#050505] flex flex-col justify-center p-12 text-white" dir="rtl">
-      <h1 className="text-4xl text-center text-[#c5a880] mb-12">{ArabicText.gateTitle}</h1>
-      <div className="bg-[#0a0a0a] border border-[#161616] p-12 max-w-lg mx-auto w-full">
-        <form onSubmit={handleLogin} className="space-y-8">
-          <input type="text" value={accessCode} onChange={(e) => setAccessCode(e.target.value)} className="w-full bg-[#111111] border border-[#1e1e1e] p-6 text-xl text-center" placeholder={ArabicText.placeholder} />
-          <button type="submit" className="w-full bg-[#c5a880] text-black text-xl py-6">{ArabicText.btnNormal}</button>
+    <div className="min-h-screen bg-[#050505] flex flex-col justify-center p-8 text-white" dir="rtl">
+      <h1 className="text-4xl text-center text-[#c5a880] mb-10">{ArabicText.gateTitle}</h1>
+      <div className="max-w-md mx-auto w-full">
+        <form onSubmit={handleLogin} className="space-y-4">
+            <input type="text" onChange={(e) => setAccessCode(e.target.value)} className="w-full bg-[#111111] border p-4 text-center" placeholder={ArabicText.placeholder} />
+            <button type="submit" className="w-full bg-[#c5a880] text-black py-4 font-bold">{isLoading ? ArabicText.btnLoading : ArabicText.btnNormal}</button>
         </form>
       </div>
     </div>
