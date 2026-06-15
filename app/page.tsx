@@ -10,7 +10,7 @@ export default function TheGate() {
   const WHATSAPP_NUMBER = '966502777884';
 
   const ArabicText = {
-    gateTitle: 'Studio Exclusive | بوابة النخبة',
+    gateTitle: 'Studio Exclusive |  بوابة النخبة',
     gateDesc: 'منصة مخصصة حصرياً لأصحاب المتاجر المسجلة.',
     label: 'رقم السجل التجاري أو كود الدعوة',
     placeholder: 'أدخل الرمز هنا...',
